@@ -24,6 +24,8 @@ Or install it yourself as:
 
     $ gem install threema
 
+**ATTENTION:** Make sure you've installed [libsodium](https://github.com/jedisct1/libsodium) from source or install the wrapped rbnacl alternative [rbnacl-libsodium](https://github.com/cryptosphere/rbnacl-libsodium) via `gem install rbnacl-libsodium`.
+
 ## Usage
 
 ### Account creation
