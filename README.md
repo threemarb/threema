@@ -138,15 +138,15 @@ Send (e2e encrypted) image messages via:
 
 # via path to file
 threema.send(
-  type: :image,
-  to:   receiver_threema_id,
+  type:  :image,
+  to:    receiver_threema_id,
   image: '/path/to/image.png',
 )
 
 # with bytestring
 threema.send(
-  type: :image,
-  to:   receiver_threema_id,
+  type:  :image,
+  to:    receiver_threema_id,
   image: 'imagecontent'.b,
 )
 ```
