@@ -13,18 +13,29 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Ruby SDK for the Threema Gateway.'
   spec.description   = 'Ruby SDK for the Threema Gateway.'
-  spec.homepage      = 'https://github.com/thorsteneckel/threema.rb'
+  spec.homepage      = 'https://github.com/thorsteneckel/threema'
   spec.license       = 'MIT'
 
   spec.required_ruby_version = '>= 2.2'
 
   spec.files         = Dir['{lib}/**/*']
-  spec.executables   = ['yeah', 'yeah-dev']
   spec.require_paths = ['lib']
+
+  spec.add_runtime_dependency 'rbnacl'
+  spec.add_runtime_dependency 'case_transform'
+  spec.add_runtime_dependency 'multipart-post'
+  spec.add_runtime_dependency 'mime-types'
+  spec.add_runtime_dependency 'dotenv'
 
   spec.add_development_dependency 'bundler', '~> 1.14'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
+  spec.add_development_dependency 'factory_girl', '~> 4.0'
+  spec.add_development_dependency 'webmock', '~> 2.3'
+  spec.add_development_dependency 'fakefs'
   spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'dotenv'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'codeclimate-test-reporter', '~> 0.6'
+  spec.add_development_dependency 'codecov', '~> 0.1'
+
 end

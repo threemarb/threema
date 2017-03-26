@@ -13,3 +13,6 @@
 
 # environment variables
 .env
+
+# code coverage
+coverage

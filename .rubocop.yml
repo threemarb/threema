@@ -1,0 +1,42 @@
+# Default enabled cops
+# https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
+
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  DisplayCopNames: true
+
+Style/NegatedIf:
+  Description: >-
+                 Favor unless over if for negative conditions
+                 (or control flow or).
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#unless-for-negatives'
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Description: 'Checks for trailing comma in array and hash literals.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+  Enabled: false
+
+Style/TrailingCommaInArguments:
+  Description: 'Checks for trailing comma in argument lists.'
+  StyleGuide: '#no-trailing-params-comma'
+  Enabled: false
+
+# RSpec tests
+
+Metrics/ModuleLength:
+  Description: 'Avoid modules longer than 100 lines of code.'
+  Exclude:
+    - "**/*_spec.rb"
+
+Metrics/BlockLength:
+  Description: 'Avoid long blocks with many lines.'
+  Exclude:
+    - "**/*_spec.rb"
+
+Metrics/MethodLength:
+  Description: 'Avoid methods longer than 10 lines of code.'
+  StyleGuide: '#short-methods'
+  Exclude:
+    - "**/*_spec.rb"

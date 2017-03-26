@@ -1,3 +1,3 @@
-module Threema
+class Threema
   VERSION = '0.1.0'.freeze
 end
