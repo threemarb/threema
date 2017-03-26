@@ -1,3 +1,4 @@
+require 'rbnacl/libsodium'
 require 'rbnacl'
 
 class Threema
