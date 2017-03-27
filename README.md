@@ -218,6 +218,7 @@ You can access the message content via `message.content` which will contain eith
 
 - [ ] Improve documentation
 - [ ] Improve `libsodium` dependency to support either gem `rbnacl-libsodium` or self compiled
+- [ ] Fix [CodeClimate issues](https://codeclimate.com/github/thorsteneckel/threema/issues)
 - [ ] Make `.rubocop_todo.yml` obsolete
 - [ ] Implement other send/receive message types (geo, video, audio, survey_meta, survey_state, delivery_receipt)
 
