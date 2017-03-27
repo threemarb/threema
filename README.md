@@ -214,14 +214,6 @@ message = threema.receive(
 
 You can access the message content via `message.content` which will contain either a text or bytestring, depending on the message type. File messages also have a `message.mime_type`.
 
-## TODO
-
-- [ ] Improve documentation
-- [ ] Improve `libsodium` dependency to support either gem `rbnacl-libsodium` or self compiled
-- [ ] Fix [CodeClimate issues](https://codeclimate.com/github/thorsteneckel/threema/issues)
-- [ ] Make `.rubocop_todo.yml` obsolete
-- [ ] Implement other send/receive message types (geo, video, audio, survey_meta, survey_state, delivery_receipt)
-
 ## Development
 
 After checking out the repo, run `bundle` to install dependencies. Then, run `rake spec` to run the tests. Make sure to not reduce the test coverage.
