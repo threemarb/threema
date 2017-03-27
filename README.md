@@ -91,7 +91,7 @@ By default HTTP Public Key Pinning is enabled to ensure the validity of the Thre
 require 'threema'
 
 threema = Threema.new(
-  public_key_pinnging: false,
+  public_key_pinning: false,
 )
 ```
 

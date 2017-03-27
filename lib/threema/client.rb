@@ -17,10 +17,10 @@ class Threema
       end
     end
 
-    def initialize(api_identity:, api_secret:, public_key_pinnging: true)
-      @api_identity        = api_identity
-      @api_secret          = api_secret
-      @public_key_pinnging = public_key_pinnging
+    def initialize(api_identity:, api_secret:, public_key_pinning: true)
+      @api_identity       = api_identity
+      @api_secret         = api_secret
+      @public_key_pinning = public_key_pinning
     end
 
     def get(url, params = {})
@@ -94,7 +94,7 @@ class Threema
 
     def request_https(uri, req)
       http = Net::HTTP.new(uri.host, uri.port).tap do |config|
-        # SSL activation and HTTP Public Key Pinnging - yay!
+        # SSL activation and HTTP Public Key Pinning - yay!
         # taken and inspired by:
         # http://stackoverflow.com/a/22108461
         config.use_ssl = true
@@ -105,7 +105,7 @@ class Threema
           return false unless preverify_ok
           end_cert = cert_store.chain[0]
           return true unless end_cert.to_der == cert_store.current_cert.to_der
-          return true unless @public_key_pinnging
+          return true unless @public_key_pinning
 
           remote_fingerprint = OpenSSL::Digest::SHA256.hexdigest(end_cert.to_der)
           remote_fingerprint == FINGERPRINT
