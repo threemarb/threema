@@ -35,7 +35,7 @@ RSpec.describe Threema::Client do
     end
   end
 
-  context 'certificate fingerprint' do
+  context 'HTTP Public Key Pinnging' do
     before(:all) do
       WebMock.allow_net_connect!
     end
@@ -47,13 +47,18 @@ RSpec.describe Threema::Client do
     # this is needed due to internet access restrictions
     # in the (travis) CI environment
     if !ENV['CI']
-      it 'checks the certificate fingerprint' do
+      it 'checks the HTTP Public Key Pinnging' do
         expect { instance.get(described_class::API_URL) }.to raise_error(RequestError)
       end
     end
 
-    it "throws OpenSSL::SSL::SSLError exception if certificate fingerprint doesn't match" do
-      expect { instance.get('https://google.com') }.to raise_error(OpenSSL::SSL::SSLError)
+    it "throws OpenSSL::SSL::SSLError exception if HTTP Public Key Pinnging doesn't match" do
+      expect { instance.get('https://requestb.in/zpi5cuzp') }.to raise_error(OpenSSL::SSL::SSLError)
+    end
+
+    it 'throws no exception if HTTP Public Key Pinnging is disabled' do
+      instance = build(:threema_client, public_key_pinnging: false)
+      expect { instance.get('https://requestb.in/zpi5cuzp') }.to_not raise_error
     end
   end
 

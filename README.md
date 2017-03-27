@@ -87,6 +87,16 @@ require 'threema'
 threema = Threema.new()
 ```
 
+By default HTTP Public Key Pinning is enabled to ensure the validity of the Threema Gateway HTTPS certificate. However in those special moments it might be necessary to disable it. Please do this only if you know what you are doing!
+
+```ruby
+require 'threema'
+
+threema = Threema.new(
+  public_key_pinnging: false,
+)
+```
+
 #### Sending
 
 With this gem you can send simple (unencrypted!) or end to end encrypted messages.

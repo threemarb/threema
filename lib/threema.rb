@@ -17,14 +17,15 @@ require 'threema/typed_message'
 class Threema
   attr_reader :client, :private_key, :api_identity, :api_secret
 
-  def initialize(api_identity: nil, api_secret: nil, private_key: nil)
+  def initialize(api_identity: nil, api_secret: nil, private_key: nil, public_key_pinnging: nil)
     @api_identity = api_identity || ENV['THREEMARB_API_IDENTITY']
     @api_secret   = api_secret   || ENV['THREEMARB_API_SECRET']
     @private_key  = private_key  || ENV['THREEMARB_PRIVATE']
 
     @client = Threema::Client.new(
-      api_identity: @api_identity,
-      api_secret:   @api_secret,
+      api_identity:        @api_identity,
+      api_secret:          @api_secret,
+      public_key_pinnging: public_key_pinnging
     )
   end
 
