@@ -24,8 +24,6 @@ Or install it yourself as:
 
     $ gem install threema
 
-**ATTENTION:** Make sure you've installed [libsodium](https://github.com/jedisct1/libsodium) from source or install the wrapped rbnacl alternative [rbnacl-libsodium](https://github.com/cryptosphere/rbnacl-libsodium) via `gem install rbnacl-libsodium`.
-
 ## Usage
 
 ### Account creation
@@ -219,6 +217,7 @@ You can access the message content via `message.content` which will contain eith
 ## TODO
 
 - [ ] Improve documentation
+- [ ] Improve `libsodium` dependency to support either gem `rbnacl-libsodium` or self compiled
 - [ ] Make `.rubocop_todo.yml` obsolete
 - [ ] Implement other send/receive message types (geo, video, audio, survey_meta, survey_state, delivery_receipt)
 
