@@ -35,9 +35,13 @@ To use the End To End encryption you have to [register an additional custom Thre
 ```ruby
 require 'threema'
 
-pair = Threema::E2E::Key.generate_pair
+pair = Threema::E2e::Key.generate_pair
 
-p pair
+p Threema::E2e::Key.encode(pair[:public])
+#=> "public:b3d84e5b2c849ef47315fbfacec3452f9149bf73aa0ded8d2e1ac69be021ea0d"
+
+p Threema::E2e::Key.encode(pair[:private])
+#=> "private:e20f700ffbe67d59b14310bb65432148b823ea9fb32f8cb21164fe02240cd002"
 ```
 
 **ATTENTION:** These are your identification. If you lose or publish your private key you lose your identitiy and have major problem. So keep your private key secure under all circumstances! Don't push it to a git repository or any other public place.
