@@ -24,6 +24,8 @@ Or install it yourself as:
 
     $ gem install threema
 
+Make sure that your operating system has `libsodium` installed. See here: https://github.com/RubyCrypto/rbnacl/wiki/Installing-libsodium
+
 ## Usage
 
 ### Account creation
