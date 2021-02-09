@@ -1,4 +1,3 @@
-require 'rbnacl/libsodium'
 require 'rbnacl'
 require 'openssl'
 require 'threema/util'
