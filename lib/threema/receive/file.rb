@@ -11,7 +11,7 @@ class Threema
     class File
       attr_reader :content, :mime_type, :name
 
-      def initialize(content:, threema:)
+      def initialize(content:, threema:, **)
         structure = JSON.parse(content)
 
         blob = Threema::Blob.new(threema: threema)
