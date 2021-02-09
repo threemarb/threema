@@ -9,6 +9,7 @@ require 'threema/util'
 require 'threema/receive/text'
 require 'threema/receive/image'
 require 'threema/receive/file'
+require 'threema/receive/delivery_receipt'
 
 class Threema
   module Receive
