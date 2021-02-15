@@ -16,8 +16,6 @@ class Threema
 
         download = blob.download(structure['b'])
 
-        raise "Bytesize doesn't match" if download.bytesize != structure['s']
-
         @content = Threema::E2e::SecretKey.decrypt(
           data:  download,
           key:   Threema::Util.unhexify(structure['k']),
