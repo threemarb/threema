@@ -16,8 +16,6 @@ class Threema
         blob     = Threema::Blob.new(threema: threema)
         download = blob.download(blob_id)
 
-        raise "Bytesize doesn't match" if download.bytesize != crypted_byte_string_size
-
         @content = Threema::E2e::PublicKey.decrypt(
           data:        download,
           private_key: threema.private_key,
