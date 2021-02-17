@@ -145,7 +145,7 @@ RSpec.describe Threema::Send do
         expect { method_call }.to raise_error(ArgumentError)
       end
 
-      it 'raises ArgumentError exception for HTTP RequestEntityTooLarge response' do
+      it 'raises ArgumentError exception for HTTP PayloadTooLarge response' do
         mock_simple_error(413)
         expect { method_call }.to raise_error(ArgumentError)
       end

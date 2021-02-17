@@ -125,7 +125,7 @@ RSpec.describe Threema::Blob do
         expect { filehandle_upload }.to raise_error(ArgumentError)
       end
 
-      it 'raises ArgumentError exception for HTTP RequestEntityTooLarge response' do
+      it 'raises ArgumentError exception for HTTP PayloadTooLarge response' do
         mock_error(413)
         expect { filehandle_upload }.to raise_error(ArgumentError)
       end

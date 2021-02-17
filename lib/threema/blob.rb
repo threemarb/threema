@@ -45,7 +45,7 @@ class Threema
       case e.message
       when 'Net::HTTPBadRequest'
         message = 'required parameters are missing or the file is empty'
-      when 'Net::HTTPRequestEntityTooLarge'
+      when 'Net::HTTPPayloadTooLarge'
         message = 'file is too big'
       else
         raise
