@@ -70,7 +70,7 @@ class Threema
         @threema.client.post_form_urlencoded(self.class.url(type), message.payload)
       end
     rescue RequestError => e
-      raise if e.message != 'Net::HTTPRequestEntityTooLarge'
+      raise if e.message != 'Net::HTTPPayloadTooLarge'
       raise ArgumentError, 'message is too long'
     end
   end
