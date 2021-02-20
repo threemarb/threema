@@ -5,6 +5,7 @@ require 'support/shared_values'
 require 'support/webmock_stubs'
 require 'webmock/rspec'
 require 'fakefs/spec_helpers'
+require 'pry'
 
 require 'simplecov'
 require 'codecov'

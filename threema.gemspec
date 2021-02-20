@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'webmock'
   spec.add_development_dependency 'fakefs'
+  spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'codeclimate-test-reporter', '~> 0.6'
