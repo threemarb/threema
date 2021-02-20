@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'json'
 
@@ -18,7 +20,7 @@ RSpec.describe Threema::Capabilities do
 
     it 'returns a list (Array of Symbols) of capabilities of the given Threema ID' do
       mock_capabilities(test_threema_id, 'image,text,video,audio,file')
-      capabilities = %i(image text video audio file)
+      capabilities = %i[image text video audio file]
       expect(method_call).to eq(capabilities)
     end
 

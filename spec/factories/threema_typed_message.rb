@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :typed_message_typed, class: Threema::TypedMessage do
     typed { "\x01Hello World" }

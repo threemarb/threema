@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Threema::Send::File do
@@ -31,9 +33,9 @@ RSpec.describe Threema::Send::File do
       payload  = instance.payload
 
       expect(payload).to include(
-        to:    a_string_matching(/.+/),
+        to: a_string_matching(/.+/),
         nonce: a_string_matching(/.+/),
-        box:   a_string_matching(/.+/),
+        box: a_string_matching(/.+/),
       )
     end
 
@@ -51,9 +53,9 @@ RSpec.describe Threema::Send::File do
         payload  = instance.payload
 
         expect(payload).to include(
-          to:    a_string_matching(/.+/),
+          to: a_string_matching(/.+/),
           nonce: a_string_matching(/.+/),
-          box:   a_string_matching(/.+/),
+          box: a_string_matching(/.+/),
         )
       end
 
@@ -68,9 +70,9 @@ RSpec.describe Threema::Send::File do
           payload  = instance.payload
 
           expect(payload).to include(
-            to:    a_string_matching(/.+/),
+            to: a_string_matching(/.+/),
             nonce: a_string_matching(/.+/),
-            box:   a_string_matching(/.+/),
+            box: a_string_matching(/.+/),
           )
         end
 
@@ -87,9 +89,9 @@ RSpec.describe Threema::Send::File do
           payload  = instance.payload
 
           expect(payload).to include(
-            to:    a_string_matching(/.+/),
+            to: a_string_matching(/.+/),
             nonce: a_string_matching(/.+/),
-            box:   a_string_matching(/.+/),
+            box: a_string_matching(/.+/),
           )
         end
 
@@ -104,9 +106,9 @@ RSpec.describe Threema::Send::File do
           payload  = instance.payload
 
           expect(payload).to include(
-            to:    a_string_matching(/.+/),
+            to: a_string_matching(/.+/),
             nonce: a_string_matching(/.+/),
-            box:   a_string_matching(/.+/),
+            box: a_string_matching(/.+/),
           )
         end
       end

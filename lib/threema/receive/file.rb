@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'threema/blob'
 require 'threema/util'
@@ -17,8 +19,8 @@ class Threema
         download = blob.download(structure['b'])
 
         @content = Threema::E2e::SecretKey.decrypt(
-          data:  download,
-          key:   Threema::Util.unhexify(structure['k']),
+          data: download,
+          key: Threema::Util.unhexify(structure['k']),
           nonce: Threema::E2e::File::NONCE[:file],
         )
 

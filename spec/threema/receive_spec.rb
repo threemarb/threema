@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'json'
 
@@ -23,15 +25,15 @@ RSpec.describe Threema::Receive do
       payload[:date]      = test_date
 
       mac = Threema::E2e::MAC.generate(
-        payload:    payload,
+        payload: payload,
         api_secret: test_api_secret,
       )
 
       payload[:mac] = mac
 
       created = described_class.e2e(
-        payload:    payload,
-        threema:    build(:threema),
+        payload: payload,
+        threema: build(:threema),
         public_key: test_public_key
       )
 
@@ -47,8 +49,8 @@ RSpec.describe Threema::Receive do
 
         expect do
           described_class.e2e(
-            payload:    payload,
-            threema:    build(:threema),
+            payload: payload,
+            threema: build(:threema),
             public_key: test_public_key
           )
         end.to raise_error(ArgumentError)
@@ -62,8 +64,8 @@ RSpec.describe Threema::Receive do
 
         expect do
           described_class.e2e(
-            payload:    payload,
-            threema:    build(:threema),
+            payload: payload,
+            threema: build(:threema),
             public_key: test_public_key
           )
         end.to raise_error(ArgumentError)
@@ -75,8 +77,8 @@ RSpec.describe Threema::Receive do
 
         expect do
           described_class.e2e(
-            payload:    payload,
-            threema:    build(:threema),
+            payload: payload,
+            threema: build(:threema),
             public_key: test_public_key
           )
         end.to raise_error(ArgumentError)
@@ -90,8 +92,8 @@ RSpec.describe Threema::Receive do
 
         expect do
           described_class.e2e(
-            payload:    payload,
-            threema:    build(:threema),
+            payload: payload,
+            threema: build(:threema),
             public_key: test_public_key
           )
         end.to raise_error(ArgumentError)
@@ -106,8 +108,8 @@ RSpec.describe Threema::Receive do
 
         expect do
           described_class.e2e(
-            payload:    payload,
-            threema:    build(:threema),
+            payload: payload,
+            threema: build(:threema),
             public_key: test_public_key
           )
         end.to raise_error(ArgumentError)
@@ -128,8 +130,8 @@ RSpec.describe Threema::Receive do
 
         expect do
           described_class.e2e(
-            payload:    payload,
-            threema:    build(:threema),
+            payload: payload,
+            threema: build(:threema),
             public_key: test_public_key
           )
         end.to raise_error(RuntimeError)
@@ -145,7 +147,7 @@ RSpec.describe Threema::Receive do
         payload[:date]      = test_date
 
         payload[:mac] = Threema::E2e::MAC.generate(
-          payload:    payload,
+          payload: payload,
           api_secret: test_api_secret,
         )
 

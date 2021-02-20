@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rbnacl'
 require 'openssl'
 require 'threema/util'
@@ -8,15 +10,16 @@ class Threema
     module Key
       KEYS = {
         phone: Threema::Util.unhexify('85adf8226953f3d96cfd5d09bf29555eb955fcd8aa5ec4f9fcd869e258370723'),
-        email: Threema::Util.unhexify('30a5500fed9701fa6defdb610841900febb8e430881f7ad816826264ec09bad7'),
+        email: Threema::Util.unhexify('30a5500fed9701fa6defdb610841900febb8e430881f7ad816826264ec09bad7')
       }.freeze
 
       class << self
         def encode(nacl_key)
           type = nil
-          if nacl_key.is_a?(RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PrivateKey)
+          case nacl_key
+          when RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PrivateKey
             type = :private
-          elsif nacl_key.is_a?(RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PublicKey)
+          when RbNaCl::Boxes::Curve25519XSalsa20Poly1305::PublicKey
             type = :public
           else
             raise ArgumentError, "Unknown key type: #{nacl_key}"
@@ -30,6 +33,7 @@ class Threema
         def hash(type, message)
           key = KEYS[type]
           raise ArgumentError, "Unknown type '#{type}'" if !key
+
           OpenSSL::HMAC.hexdigest('sha256', KEYS[type], message)
         end
 
@@ -39,7 +43,7 @@ class Threema
 
           {
             private: private_key,
-            public:  public_key
+            public: public_key
           }
         end
       end

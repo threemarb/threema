@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rbnacl'
 
 class Threema
@@ -16,7 +18,7 @@ class Threema
       end
 
       def deflate(message)
-        padding_length = message[-1].unpack('C').first
+        padding_length = message[-1].unpack1('C')
         message[0...-padding_length]
       end
     end

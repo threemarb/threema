@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Threema do
@@ -27,7 +29,7 @@ RSpec.describe Threema do
     end
 
     it 'tunnles send messages' do
-      %i(text image file).each do |message_type|
+      %i[text image file].each do |message_type|
         attributes = attributes_for("#{message_type}_message".to_sym)
 
         expect_any_instance_of(Threema::Send).to receive(message_type).with(attributes)

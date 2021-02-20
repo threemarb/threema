@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'json'
 
@@ -17,7 +19,7 @@ RSpec.describe Threema::Send do
     )
                .to_return(
                  status: 200,
-                 body:   test_message_id
+                 body: test_message_id
                )
   end
 
@@ -38,12 +40,12 @@ RSpec.describe Threema::Send do
       body: {
         'box' => /.+/,
         'nonce' => /.+/,
-        'to'    => threema_id
+        'to' => threema_id
       }.merge(test_auth_params)
     )
             .to_return(
               status: 200,
-              body:   test_message_id
+              body: test_message_id
             )
   end
 
@@ -104,7 +106,7 @@ RSpec.describe Threema::Send do
 
     it 'sends to threema_id and returns the message ID' do
       mock_simple(
-        to:   test_threema_id,
+        to: test_threema_id,
         text: hello_world,
       )
 
@@ -116,7 +118,7 @@ RSpec.describe Threema::Send do
 
       mock_simple(
         phone: phone,
-        text:  hello_world,
+        text: hello_world,
       )
 
       expect(instance.simple(phone: phone, text: hello_world)).to eq(test_message_id)
@@ -127,7 +129,7 @@ RSpec.describe Threema::Send do
 
       mock_simple(
         email: email,
-        text:  hello_world,
+        text: hello_world,
       )
 
       expect(instance.simple(email: email, text: hello_world)).to eq(test_message_id)

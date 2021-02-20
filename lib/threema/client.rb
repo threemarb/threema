@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openssl'
 require 'net/http'
 require 'net/https'
@@ -8,8 +10,8 @@ require 'threema/exceptions'
 
 class Threema
   class Client
-    FINGERPRINT = 'a6840a28041a1c43d90c21122ea324272f5c90c82dd64f52701f3a8f1a2b395b'.freeze
-    API_URL     = 'https://msgapi.threema.ch'.freeze
+    FINGERPRINT = 'a6840a28041a1c43d90c21122ea324272f5c90c82dd64f52701f3a8f1a2b395b'
+    API_URL     = 'https://msgapi.threema.ch'
 
     class << self
       def url(path = '')
@@ -38,9 +40,9 @@ class Threema
         uri = URI(url)
         req = Net::HTTP::Post.new(uri)
         req.set_form_data(payload.merge(
-                            from:   @api_identity,
+                            from: @api_identity,
                             secret: @api_secret,
-        ))
+                          ))
 
         request_https(uri, req)
       end
@@ -73,6 +75,7 @@ class Threema
       return response if response.is_a?(Net::HTTPOK)
       raise Unauthorized if response.is_a?(Net::HTTPUnauthorized)
       raise RemoteError if response.is_a?(Net::HTTPInternalServerError)
+
       raise RequestError.new(response.class.name, response)
     end
 
@@ -80,6 +83,7 @@ class Threema
       yield
     rescue RequestError => e
       raise if e.message != 'Net::HTTPPaymentRequired'
+
       raise CreditError, 'no credits remain'
     end
 
@@ -87,6 +91,7 @@ class Threema
       yield
     rescue RequestError => e
       return if e.message == 'Net::HTTPNotFound'
+
       raise
     end
 
@@ -103,6 +108,7 @@ class Threema
 
         config.verify_callback = lambda do |preverify_ok, cert_store|
           return false unless preverify_ok
+
           end_cert = cert_store.chain[0]
           return true unless end_cert.to_der == cert_store.current_cert.to_der
           return true unless @public_key_pinning
@@ -126,7 +132,7 @@ class Threema
 
     def authed(params = {})
       params.merge(
-        from:   @api_identity,
+        from: @api_identity,
         secret: @api_secret,
       )
     end

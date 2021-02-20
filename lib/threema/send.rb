@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'case_transform'
 require 'threema/exceptions'
 require 'threema/send/simple'
@@ -9,13 +11,14 @@ class Threema
   class Send
     URL_PATH = {
       simple: '/send_simple',
-      e2e:    '/send_e2e',
+      e2e: '/send_e2e'
     }.freeze
 
     class << self
       def url(action)
         path = URL_PATH[action]
         raise ArgumentError, "Unknown action '#{action}'" if !path
+
         Threema::Client.url(path)
       end
     end
@@ -62,6 +65,7 @@ class Threema
       submit(:e2e, message)
     rescue RequestError => e
       raise if e.message != 'Net::HTTPBadRequest'
+
       raise ArgumentError, 'recipient identity is invalid or the account is not set up for end-to-end mode'
     end
 
@@ -71,6 +75,7 @@ class Threema
       end
     rescue RequestError => e
       raise if e.message != 'Net::HTTPPayloadTooLarge'
+
       raise ArgumentError, 'message is too long'
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'case_transform'
 require 'threema/exceptions'
 
@@ -6,7 +8,7 @@ class Threema
     ID_SIZE  = 16
     URL_PATH = {
       download: '/blobs/%{blob_id}',
-      upload:   '/upload_blob',
+      upload: '/upload_blob'
     }.freeze
 
     class << self
@@ -17,6 +19,7 @@ class Threema
       def url(action)
         path = URL_PATH[action]
         raise ArgumentError, "Unknown action '#{action}'" if !path
+
         Threema::Client.url(path)
       end
     end
@@ -61,6 +64,7 @@ class Threema
       return file if file.respond_to?(:read)
       raise ArgumentError, "Can't handle parameter class '#{file.class.name}'" if !file.is_a?(String)
       raise ArgumentError, "Can't read file '#{file}'" if !File.readable?(file)
+
       File.open(file)
     end
   end

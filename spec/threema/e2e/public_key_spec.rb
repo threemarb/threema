@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'base64'
 
@@ -18,9 +20,9 @@ RSpec.describe Threema::E2e::PublicKey do
       expect(
         described_class.encrypt(
           private_key: private_key,
-          public_key:  public_key,
-          nonce:       nonce,
-          data:        decrypted_message,
+          public_key: public_key,
+          nonce: nonce,
+          data: decrypted_message,
         )
       ).to eq(encrypted_message)
     end
@@ -35,9 +37,9 @@ RSpec.describe Threema::E2e::PublicKey do
       expect(
         described_class.decrypt(
           private_key: private_key,
-          public_key:  public_key,
-          nonce:       nonce,
-          data:        encrypted_message,
+          public_key: public_key,
+          nonce: nonce,
+          data: encrypted_message,
         )
       ).to eq(decrypted_message)
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openssl'
 
 class Threema
@@ -8,7 +10,7 @@ class Threema
           raise ArgumentError, "Missing attribute ':mac' in payload" if payload[:mac].nil?
 
           check_mac = generate(
-            payload:    payload,
+            payload: payload,
             api_secret: api_secret
           )
           payload[:mac] == check_mac
@@ -21,9 +23,10 @@ class Threema
         private
 
         def concat(payload)
-          %i(from to messageId date nonce box).collect do |key|
+          %i[from to messageId date nonce box].collect do |key|
             value = payload[key]
             raise ArgumentError, "Missing attribute '#{key}' in payload" if value.nil?
+
             value
           end.join
         end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Threema::Receive::Image do
@@ -6,10 +8,10 @@ RSpec.describe Threema::Receive::Image do
     nonce       = Threema::E2e.nonce
 
     crypted_byte_string = Threema::E2e::PublicKey.encrypt(
-      data:        byte_string,
+      data: byte_string,
       private_key: test_private_key,
-      public_key:  test_public_key,
-      nonce:       nonce,
+      public_key: test_public_key,
+      nonce: nonce,
     )
 
     blob_id       = test_blob_id
@@ -23,13 +25,13 @@ RSpec.describe Threema::Receive::Image do
       )
       .to_return(
         status: 200,
-        body:   crypted_byte_string,
+        body: crypted_byte_string,
       )
 
     instance = described_class.new(
-      content:    content,
+      content: content,
       public_key: test_public_key,
-      threema:    build(:threema),
+      threema: build(:threema),
     )
 
     expect(instance.content).to eq(byte_string)

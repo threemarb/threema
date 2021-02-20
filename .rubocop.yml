@@ -13,11 +13,6 @@ Style/NegatedIf:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#unless-for-negatives'
   Enabled: false
 
-Style/TrailingCommaInLiteral:
-  Description: 'Checks for trailing comma in array and hash literals.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
-  Enabled: false
-
 Style/TrailingCommaInArguments:
   Description: 'Checks for trailing comma in argument lists.'
   StyleGuide: '#no-trailing-params-comma'

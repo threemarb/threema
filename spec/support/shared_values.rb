@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 def test_threema_id
-  'EXMP1337'.freeze
+  'EXMP1337'
 end
 
 def hello_world
-  'Hello World'.freeze
+  'Hello World'
 end
 
 def test_public_key
@@ -16,8 +18,8 @@ end
 
 def test_auth_params
   {
-    from:   test_from,
-    secret: test_api_secret,
+    from: test_from,
+    secret: test_api_secret
   }
 end
 
@@ -30,9 +32,9 @@ def test_api_secret
 end
 
 def test_blob_id
-  '12103bc93ae43a4a1b9ad24626969975'.freeze
+  '12103bc93ae43a4a1b9ad24626969975'
 end
 
 def test_message_id
-  'messageid1234567'.freeze
+  'messageid1234567'
 end

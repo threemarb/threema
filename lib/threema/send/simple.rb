@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class Threema
   class Send
     class Simple
       RECEIVER = {
         threema_id: :to,
-        phone:      :phone,
-        email:      :email,
+        phone: :phone,
+        email: :email
       }.freeze
 
       attr_reader :payload
@@ -24,15 +26,18 @@ class Threema
       def initialize_receiver_payload(params)
         return if RECEIVER.keys.any? do |param|
           next if !params[param]
+
           @payload[RECEIVER[param]] = params[param]
           true
         end
+
         raise ArgumentError, "One of the following parameters is required: #{RECEIVER.keys.join(', ')}"
       end
 
       def initialize_text_payload(params)
         @payload[:text] = params[:text]
         return if @payload[:text].present?
+
         raise ArgumentError, 'Parameter text is required'
       end
     end

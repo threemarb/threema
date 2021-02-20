@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'support/factory_bot'
 require 'support/have_constant_matcher'

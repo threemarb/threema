@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'threema/send/e2e_base'
 require 'threema/e2e'
 

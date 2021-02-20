@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Threema
   module Util
     class << self
       def hexify(string)
-        string.unpack('H*').first
+        string.unpack1('H*')
       end
 
       def unhexify(hex)
