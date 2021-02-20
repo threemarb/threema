@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'support/factory_girl'
+require 'support/factory_bot'
 require 'support/have_constant_matcher'
 require 'support/shared_values'
 require 'support/webmock_stubs'

@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :typed_message_typed, class: Threema::TypedMessage do
-    typed "\x01Hello World"
+    typed { "\x01Hello World" }
 
     initialize_with do
       new(attributes)
@@ -8,8 +8,8 @@ FactoryGirl.define do
   end
 
   factory :typed_message_text, class: Threema::TypedMessage do
-    type    :text
-    message hello_world
+    type    { :text }
+    message { hello_world }
 
     initialize_with do
       new(attributes)

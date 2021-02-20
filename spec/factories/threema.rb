@@ -1,7 +1,7 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :threema do
-    api_identity test_from
-    api_secret   test_api_secret
+    api_identity { test_from }
+    api_secret   { test_api_secret }
 
     initialize_with do
       new(attributes)
