@@ -11,7 +11,8 @@ RSpec.describe Threema::Client do
     expect(described_class).to respond_to(:url)
   end
 
-  let(:instance) { build(:threema_client) }
+  let(:instance) { build(:threema_client, threema: threema) }
+  let(:threema) { build(:threema) }
 
   context '#not_found_ok' do
     it 'responds to not_found_ok' do
@@ -37,30 +38,63 @@ RSpec.describe Threema::Client do
     end
   end
 
-  context 'HTTP Public Key Pinning' do
-    before(:all) do
-      WebMock.allow_net_connect!
-    end
+  describe '#configure' do
+    subject { -> { instance.get(url) } }
+    context 'with static certificate pinning' do
+      let(:public_key_pinning) { true }
 
-    after(:all) do
-      WebMock.disable_net_connect!
-    end
-
-    # this is needed due to internet access restrictions
-    # in the (travis) CI environment
-    if !ENV['CI']
-      it 'checks the HTTP Public Key Pinning' do
-        expect { instance.get(described_class::API_URL) }.to raise_error(RequestError)
+      before(:all) do
+        WebMock.allow_net_connect!
       end
-    end
 
-    it "throws OpenSSL::SSL::SSLError exception if HTTP Public Key Pinning doesn't match" do
-      expect { instance.get('https://requestb.in/zpi5cuzp') }.to raise_error(OpenSSL::SSL::SSLError)
-    end
+      after(:all) do
+        WebMock.disable_net_connect!
+      end
 
-    it 'throws no exception if HTTP Public Key Pinning is disabled' do
-      instance = build(:threema_client, public_key_pinning: false)
-      expect { instance.get('https://requestb.in/zpi5cuzp') }.to_not raise_error
+      before(:each) do
+        instance.configure do |config|
+          # Threema API fingerprint as of 2021-02-27
+          fingerprint = '42b1038e72f00c8c4dad78a3ebdc6d7a50c5ef288da9019b9171e4d675c08a17'
+
+          # See: http://stackoverflow.com/a/22108461
+          config.use_ssl = true
+
+          config.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+          config.verify_callback = lambda do |preverify_ok, cert_store|
+            return false unless preverify_ok
+
+            end_cert = cert_store.chain[0]
+            return true unless end_cert.to_der == cert_store.current_cert.to_der
+            return true unless public_key_pinning
+
+            remote_fingerprint = OpenSSL::Digest::SHA256.hexdigest(end_cert.to_der)
+            remote_fingerprint == fingerprint
+          end
+        end
+      end
+
+      # this is needed due to internet access restrictions
+      # in the (travis) CI environment
+      if !ENV['CI']
+        context 'given Threema Message API URL with matching certificate' do
+          let(:url) { described_class::API_URL }
+          it 'checks HTTP Public Key Pinning' do
+            should raise_error(RequestError)
+            # not OpenSSL::SSL::SSLError
+          end
+        end
+      end
+
+      context 'given another URL without matching certificate' do
+        let(:url) { 'https://github.com/thorsteneckel/threema' }
+        it { should raise_error(OpenSSL::SSL::SSLError) }
+
+        context 'but if static certificate pinning is disabled' do
+          let(:public_key_pinning) { false }
+          it { should_not raise_error }
+        end
+      end
     end
   end
 

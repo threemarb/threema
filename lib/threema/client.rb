@@ -10,8 +10,9 @@ require 'threema/exceptions'
 
 class Threema
   class Client
-    FINGERPRINT = 'a6840a28041a1c43d90c21122ea324272f5c90c82dd64f52701f3a8f1a2b395b'
-    API_URL     = 'https://msgapi.threema.ch'
+    API_URL = 'https://msgapi.threema.ch'
+
+    attr_reader :threema
 
     class << self
       def url(path = '')
@@ -19,10 +20,16 @@ class Threema
       end
     end
 
-    def initialize(api_identity:, api_secret:, public_key_pinning: true)
-      @api_identity       = api_identity
-      @api_secret         = api_secret
-      @public_key_pinning = public_key_pinning
+    def initialize(threema:)
+      @threema = threema
+      @configuration = lambda do |config|
+        config.use_ssl = true
+        config.verify_mode = OpenSSL::SSL::VERIFY_PEER
+      end
+    end
+
+    def configure(&block)
+      @configuration = block
     end
 
     def get(url, params = {})
@@ -40,8 +47,8 @@ class Threema
         uri = URI(url)
         req = Net::HTTP::Post.new(uri)
         req.set_form_data(payload.merge(
-                            from: @api_identity,
-                            secret: @api_secret,
+                            from: threema.api_identity,
+                            secret: threema.api_secret,
                           ))
 
         request_https(uri, req)
@@ -97,26 +104,11 @@ class Threema
 
     private
 
+    attr_reader :configuration
+
     def request_https(uri, req)
-      http = Net::HTTP.new(uri.host, uri.port).tap do |config|
-        # SSL activation and HTTP Public Key Pinning - yay!
-        # taken and inspired by:
-        # http://stackoverflow.com/a/22108461
-        config.use_ssl = true
-
-        config.verify_mode = OpenSSL::SSL::VERIFY_PEER
-
-        config.verify_callback = lambda do |preverify_ok, cert_store|
-          return false unless preverify_ok
-
-          end_cert = cert_store.chain[0]
-          return true unless end_cert.to_der == cert_store.current_cert.to_der
-          return true unless @public_key_pinning
-
-          remote_fingerprint = OpenSSL::Digest::SHA256.hexdigest(end_cert.to_der)
-          remote_fingerprint == FINGERPRINT
-        end
-      end
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.tap(&configuration) if configuration
 
       # for those special moments...
       # http.set_debug_output($stdout)
@@ -132,8 +124,8 @@ class Threema
 
     def authed(params = {})
       params.merge(
-        from: @api_identity,
-        secret: @api_secret,
+        from: threema.api_identity,
+        secret: threema.api_secret,
       )
     end
   end
