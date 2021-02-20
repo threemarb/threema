@@ -91,14 +91,31 @@ require 'threema'
 threema = Threema.new()
 ```
 
-By default HTTP Public Key Pinning is enabled to ensure the validity of the Threema Gateway HTTPS certificate. However in those special moments it might be necessary to disable it. Please do this only if you know what you are doing!
+If you want, you can configure static certificate pinning like this:
 
 ```ruby
 require 'threema'
 
-threema = Threema.new(
-  public_key_pinning: false,
-)
+threema = Threema.new
+threema.client.configure do |config|
+  # Threema API fingerprint as of 2021-02-27
+  fingerprint = '42b1038e72f00c8c4dad78a3ebdc6d7a50c5ef288da9019b9171e4d675c08a17'
+
+  # See: http://stackoverflow.com/a/22108461
+  config.use_ssl = true
+
+  config.verify_mode = OpenSSL::SSL::VERIFY_PEER
+
+  config.verify_callback = lambda do |preverify_ok, cert_store|
+    return false unless preverify_ok
+
+    end_cert = cert_store.chain[0]
+    return true unless end_cert.to_der == cert_store.current_cert.to_der
+
+    remote_fingerprint = OpenSSL::Digest::SHA256.hexdigest(end_cert.to_der)
+    remote_fingerprint == fingerprint
+  end
+end
 ```
 
 #### Sending
