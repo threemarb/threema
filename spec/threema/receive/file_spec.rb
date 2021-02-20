@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Threema::Receive::File do
@@ -11,8 +13,8 @@ RSpec.describe Threema::Receive::File do
   let(:instance) do
     secret_key = Threema::E2e::SecretKey.generate
     encrypted  = Threema::E2e::SecretKey.encrypt(
-      key:   secret_key,
-      data:  content,
+      key: secret_key,
+      data: content,
       nonce: Threema::E2e::File::NONCE[:file],
     )
 
@@ -32,7 +34,7 @@ RSpec.describe Threema::Receive::File do
       )
       .to_return(
         status: 200,
-        body:   encrypted
+        body: encrypted
       )
 
     described_class.new(

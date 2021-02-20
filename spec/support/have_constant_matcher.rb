@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # http://stackoverflow.com/a/13916925
 RSpec::Matchers.define :have_constant do |const|
   match do |owner|

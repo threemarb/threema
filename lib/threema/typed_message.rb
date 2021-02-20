@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 class Threema
   class TypedMessage
     TYPE_BYTE = {
-      text:             "\x01".b,
-      image:            "\x02".b,
-      geo:              "\x10".b, # NOT IMPLEMENTED YET
-      video:            "\x13".b, # NOT IMPLEMENTED YET
-      audio:            "\x14".b, # NOT IMPLEMENTED YET
-      survey_meta:      "\x15".b, # NOT IMPLEMENTED YET
-      survey_state:     "\x16".b, # NOT IMPLEMENTED YET
-      file:             "\x17".b,
-      delivery_receipt: "\x80".b, # NOT IMPLEMENTED YET
+      text: "\x01".b,
+      image: "\x02".b,
+      geo: "\x10".b, # NOT IMPLEMENTED YET
+      video: "\x13".b, # NOT IMPLEMENTED YET
+      audio: "\x14".b, # NOT IMPLEMENTED YET
+      survey_meta: "\x15".b, # NOT IMPLEMENTED YET
+      survey_state: "\x16".b, # NOT IMPLEMENTED YET
+      file: "\x17".b,
+      delivery_receipt: "\x80".b # NOT IMPLEMENTED YET
     }.freeze
 
     class << self
@@ -41,12 +43,14 @@ class Threema
 
     def split
       return if @type || @message
+
       @message = @typed.dup
       @type    = self.class.type_by(@message.slice!(0))
     end
 
     def join
       return if @typed
+
       @typed = "#{self.class.byte_by(@type)}#{@message}".b
     end
   end

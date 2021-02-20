@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :threema_account, class: Threema::Account do
     threema { FactoryBot.build(:threema) }

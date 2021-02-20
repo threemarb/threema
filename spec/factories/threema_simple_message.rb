@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :simple_message_threema_id, class: Threema::Send::Simple do
     threema_id { test_threema_id }
@@ -9,7 +11,7 @@ FactoryBot.define do
   end
 
   factory :simple_message_phone, class: Threema::Send::Simple do
-    phone {' 41791234567 '}
+    phone { ' 41791234567 ' }
     text  { hello_world }
 
     initialize_with do
@@ -18,7 +20,7 @@ FactoryBot.define do
   end
 
   factory :simple_message_email, class: Threema::Send::Simple do
-    email {' test @threema.ch'}
+    email { ' test @threema.ch' }
     text  { hello_world }
 
     initialize_with do

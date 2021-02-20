@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'json'
 
@@ -9,7 +11,7 @@ RSpec.describe Threema::Lookup do
       .with(query: test_auth_params)
       .to_return(
         status: 200,
-        body:   response,
+        body: response,
       )
   end
 
@@ -229,35 +231,35 @@ RSpec.describe Threema::Lookup do
 
     it 'returns a list of looked up phone and email hashes' do
       params = {
-        phone_hashes: %w(
+        phone_hashes: %w[
           27b0e25b6091a0d527e0265e2b4669691f253fd7e4fdca4e82ad37cb1e2bcc32
           ebe6cf4cb497b626622ed7eca80dff38a766153cb820441c03cd2677976b3b6a
-        ),
-        email_hashes: %w(
+        ],
+        email_hashes: %w[
           eca1f01b9fa1ae14ba9d2fe236cde235c0f7877e73173d13501635a63010ded5
           8bb29bd2b5e7b9ca317eb345fd1f7f9a1f7a0524369872b0dac2d903fdfe36e3
-        )
+        ]
       }
       payload = {
-        phoneHashes: %w(
+        phoneHashes: %w[
           27b0e25b6091a0d527e0265e2b4669691f253fd7e4fdca4e82ad37cb1e2bcc32
           ebe6cf4cb497b626622ed7eca80dff38a766153cb820441c03cd2677976b3b6a
-        ),
-        emailHashes: %w(
+        ],
+        emailHashes: %w[
           eca1f01b9fa1ae14ba9d2fe236cde235c0f7877e73173d13501635a63010ded5
           8bb29bd2b5e7b9ca317eb345fd1f7f9a1f7a0524369872b0dac2d903fdfe36e3
-        )
+        ]
       }
 
       response = [
         {
           'phoneHash' => '27b0e25b6091a0d527e0265e2b4669691f253fd7e4fdca4e82ad37cb1e2bcc32',
-          'identity'  => 'QRSTUVWX',
+          'identity' => 'QRSTUVWX',
           'publicKey' => 'e58771baf2db70989d0724ef77ba6bf867d46aaa24fc2c3f8f0f144d89a6264b'
         },
         {
           'emailHash' => '8bb29bd2b5e7b9ca317eb345fd1f7f9a1f7a0524369872b0dac2d903fdfe36e3',
-          'identity'  => 'JIKLMNOP',
+          'identity' => 'JIKLMNOP',
           'publicKey' => '6a2bd9a0912d4ce0e5c6fc6c9b8ac14a8fdb6282a34c7e0f5fe57d57c54fb69f'
         }
       ]
@@ -265,12 +267,12 @@ RSpec.describe Threema::Lookup do
       result = [
         {
           phone_hash: '27b0e25b6091a0d527e0265e2b4669691f253fd7e4fdca4e82ad37cb1e2bcc32',
-          identity:   'QRSTUVWX',
+          identity: 'QRSTUVWX',
           public_key: 'e58771baf2db70989d0724ef77ba6bf867d46aaa24fc2c3f8f0f144d89a6264b'
         },
         {
           email_hash: '8bb29bd2b5e7b9ca317eb345fd1f7f9a1f7a0524369872b0dac2d903fdfe36e3',
-          identity:   'JIKLMNOP',
+          identity: 'JIKLMNOP',
           public_key: '6a2bd9a0912d4ce0e5c6fc6c9b8ac14a8fdb6282a34c7e0f5fe57d57c54fb69f'
         }
       ]
@@ -278,10 +280,10 @@ RSpec.describe Threema::Lookup do
       stub_request(:post, url)
         .with(
           query: test_auth_params,
-          body:  payload.to_json,
+          body: payload.to_json,
         )
         .to_return(
-          body:   response.to_json,
+          body: response.to_json,
           status: 200,
         )
       expect(instance.bulk(params)).to eq(result)

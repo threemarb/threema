@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 require 'case_transform'
 
 class Threema
   class Lookup
     URL_PATH = {
       threema_id: '/pubkeys/%{threema_id}',
-      phone:      '/lookup/phone/%{phone}',
+      phone: '/lookup/phone/%{phone}',
       phone_hash: '/lookup/phone_hash/%{phone_hash}',
-      email:      '/lookup/email/%{email}',
+      email: '/lookup/email/%{email}',
       email_hash: '/lookup/email_hash/%{email_hash}',
-      bulk:       '/lookup/bulk',
+      bulk: '/lookup/bulk'
     }.freeze
 
     class << self
@@ -19,6 +21,7 @@ class Threema
       def url(resource)
         path = URL_PATH[resource]
         raise ArgumentError, "Unknown resource '#{resource}'" if !path
+
         Threema::Client.url(path)
       end
     end

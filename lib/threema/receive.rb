@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'case_transform'
 require 'threema/e2e/mac'
 require 'threema/typed_message'
@@ -23,14 +25,14 @@ class Threema
         )
 
         unwrapped = unwrap(
-          payload:    payload,
-          threema:    threema,
+          payload: payload,
+          threema: threema,
           public_key: public_key,
         )
 
         instanciate(
-          threema:    threema,
-          unwrapped:  unwrapped,
+          threema: threema,
+          unwrapped: unwrapped,
           public_key: public_key,
         )
       end
@@ -41,11 +43,11 @@ class Threema
         typed_message = Threema::TypedMessage.new(typed: unwrapped)
 
         type_instance(
-          type:   typed_message.type,
+          type: typed_message.type,
           params: {
-            threema:    threema,
-            content:    typed_message.message,
-            public_key: public_key,
+            threema: threema,
+            content: typed_message.message,
+            public_key: public_key
           }
         )
       end
@@ -65,8 +67,8 @@ class Threema
 
       def unwrap(payload:, threema:, public_key:)
         decrypted = decrypt(
-          payload:    payload,
-          threema:    threema,
+          payload: payload,
+          threema: threema,
           public_key: public_key,
         )
 
@@ -77,15 +79,16 @@ class Threema
       def decrypt(payload:, threema:, public_key:)
         Threema::E2e::PublicKey.decrypt(
           private_key: threema.private_key,
-          public_key:  public_key,
-          data:        Threema::Util.unhexify(payload[:box]),
-          nonce:       Threema::Util.unhexify(payload[:nonce]),
+          public_key: public_key,
+          data: Threema::Util.unhexify(payload[:box]),
+          nonce: Threema::Util.unhexify(payload[:nonce]),
         )
       end
 
       def sanity_check(payload:, threema:)
-        %i(box nonce).each do |key|
+        %i[box nonce].each do |key|
           next if payload[key].present?
+
           raise ArgumentError, "Missing key '#{key}' in payload"
         end
 
@@ -97,18 +100,21 @@ class Threema
 
       def validate_mac(payload:, threema:)
         return if Threema::E2e::MAC.valid?(
-          payload:    payload,
+          payload: payload,
           api_secret: threema.api_secret,
         )
+
         raise "Invalid mac '#{payload[:mac]}' for payload"
       end
 
       def public_key(payload:, threema:)
         from = payload[:from]
         raise ArgumentError, "Missing key 'from' in payload" if from.blank?
+
         lookup = Threema::Lookup.new(threema: threema)
         public_key = lookup.key(from)
         return public_key if public_key.present?
+
         raise "Can't find public key for Threema ID '#{from}'"
       end
     end

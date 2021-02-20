@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'threema/send/e2e_base'
 
 class Threema
@@ -12,6 +14,7 @@ class Threema
 
       def validate_param(key, parameter)
         return if parameter.is_a?(String)
+
         raise ArgumentError, "Parameter '#{key}' has to be a file path or byte string."
       end
 

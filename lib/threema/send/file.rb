@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'threema/send/e2e_upload'
 require 'threema/util'
 require 'json'
@@ -16,6 +18,7 @@ class Threema
       def structure(params)
         content = from(params)
         return content if !params[:thumbnail]
+
         content['t'] = thumbnail_blob_id(params)
         content
       end
@@ -24,8 +27,8 @@ class Threema
         byte_string = byte_string(:file, params[:file])
 
         encrypted = Threema::E2e::SecretKey.encrypt(
-          key:   secret_key,
-          data:  byte_string,
+          key: secret_key,
+          data: byte_string,
           nonce: Threema::E2e::File::NONCE[:file],
         )
 
@@ -35,7 +38,7 @@ class Threema
           'm' => params[:mime_type] || @mime_type.to_s || 'application/octet-stream',
           'n' => params[:file_name] || @file_name || 'unknown',
           's' => byte_string.size,
-          'i' => 0,
+          'i' => 0
         }
       end
 
@@ -43,8 +46,8 @@ class Threema
         byte_string = byte_string(:thumbnail, params[:thumbnail])
 
         encrypted = Threema::E2e::SecretKey.encrypt(
-          key:   secret_key,
-          data:  byte_string,
+          key: secret_key,
+          data: byte_string,
           nonce: Threema::E2e::File::NONCE[:thumbnail],
         )
 
@@ -58,8 +61,10 @@ class Threema
       def before_binread(file)
         @file_name = ::File.basename(file)
         return if @file_name.blank?
+
         extension = ::File.extname(@file_name)
         return if extension.blank?
+
         @mime_type = MIME::Types.type_for(extension).first
       end
     end

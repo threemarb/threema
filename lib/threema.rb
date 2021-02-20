@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dotenv/load'
 
 require 'threema/version'
@@ -23,14 +25,15 @@ class Threema
     @private_key  = private_key  || ENV['THREEMARB_PRIVATE']
 
     @client = Threema::Client.new(
-      api_identity:       @api_identity,
-      api_secret:         @api_secret,
+      api_identity: @api_identity,
+      api_secret: @api_secret,
       public_key_pinning: public_key_pinning
     )
   end
 
   def send(args)
     raise ArgumentError, "Parameter ':type' is required" if args[:type].blank?
+
     sender.public_send(args.delete(:type), args)
   end
 

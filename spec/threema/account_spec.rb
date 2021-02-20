@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Threema::Account do
@@ -22,7 +24,7 @@ RSpec.describe Threema::Account do
         .with(query: test_auth_params)
         .to_return(
           status: 200,
-          body:   credits.to_s,
+          body: credits.to_s,
         )
 
       expect(instance.credits).to eq(credits)

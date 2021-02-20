@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :text_message, class: Threema::Send::Text do
     threema    { FactoryBot.build(:threema) }

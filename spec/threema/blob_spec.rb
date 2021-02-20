@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'json'
 
@@ -75,14 +77,14 @@ RSpec.describe Threema::Blob do
     it 'uploads file from filehandle and returns a blob_id' do
       stub_request(:post, url)
         .with(
-          query:   test_auth_params,
+          query: test_auth_params,
           headers: {
             'Content-Type' => %r{multipart/form-data;}
           }
         )
         .to_return(
           status: 200,
-          body:   blob_id
+          body: blob_id
         )
 
       expect(filehandle_upload).to eq(blob_id)
@@ -91,14 +93,14 @@ RSpec.describe Threema::Blob do
     it 'uploads file from file path and returns a blob_id' do
       stub_request(:post, url)
         .with(
-          query:   test_auth_params,
+          query: test_auth_params,
           headers: {
             'Content-Type' => %r{multipart/form-data;}
           }
         )
         .to_return(
           status: 200,
-          body:   blob_id
+          body: blob_id
         )
 
       File.write(path, content)
