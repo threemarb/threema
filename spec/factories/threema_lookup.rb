@@ -1,6 +1,6 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :threema_lookup, class: Threema::Lookup do
-    threema { FactoryGirl.build(:threema) }
+    threema { FactoryBot.build(:threema) }
 
     initialize_with do
       new(attributes)

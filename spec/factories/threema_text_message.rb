@@ -1,9 +1,9 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :text_message, class: Threema::Send::Text do
-    threema    { FactoryGirl.build(:threema) }
-    threema_id test_threema_id
-    text       hello_world
-    public_key nil
+    threema    { FactoryBot.build(:threema) }
+    threema_id { test_threema_id }
+    text       { hello_world }
+    public_key { nil }
 
     initialize_with do
       new(attributes)
