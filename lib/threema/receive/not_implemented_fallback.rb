@@ -2,7 +2,7 @@
 
 class Threema
   module Receive
-    class DeliveryReceipt
+    class NotImplementedFallback
       attr_reader :content
 
       def initialize(content:, **)

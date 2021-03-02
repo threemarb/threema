@@ -13,8 +13,9 @@ RSpec.describe Threema::Receive do
 
   describe '.e2e' do
     subject { -> { described_class.e2e(payload: payload, threema: build(:threema), public_key: public_key) } }
+    let(:initial_payload) { build(:text_message, public_key: test_public_key).payload }
     let(:payload) do
-      the_payload = build(:text_message, public_key: test_public_key).payload
+      the_payload = initial_payload
       the_payload[:from]      = test_from
       the_payload[:messageId] = test_message_id
       the_payload[:date]      = test_date
@@ -95,6 +96,28 @@ RSpec.describe Threema::Receive do
 
       it 'creates instance of Threema::Receive::Text' do
         expect(subject.call).to be_a(Threema::Receive::Text)
+      end
+    end
+
+    context 'for delivery receipts' do
+      let(:initial_payload) do
+        attributes = attributes_for(:text_message).merge(public_key: test_public_key)
+        Threema::Send::E2EBase.new(attributes).send(:generate_payload, :delivery_receipt, 'whatever')
+      end
+
+      it 'creates instance of type Threema::Receive::DeliveryReceipt' do
+        expect(subject.call).to be_a(Threema::Receive::DeliveryReceipt)
+      end
+    end
+
+    context 'for not yet implemented message types' do
+      let(:initial_payload) do
+        attributes = attributes_for(:text_message).merge(public_key: test_public_key)
+        Threema::Send::E2EBase.new(attributes).send(:generate_payload, :geo, 'whatever')
+      end
+
+      it 'creates instance of type Threema::Receive::DeliveryReceipt' do
+        expect(subject.call).to be_a(Threema::Receive::NotImplementedFallback)
       end
     end
   end
