@@ -11,7 +11,7 @@ class Threema
       survey_meta: "\x15".b, # NOT IMPLEMENTED YET
       survey_state: "\x16".b, # NOT IMPLEMENTED YET
       file: "\x17".b,
-      delivery_receipt: "\x80".b # NOT IMPLEMENTED YET
+      delivery_receipt: "\x80".b
     }.freeze
 
     class << self

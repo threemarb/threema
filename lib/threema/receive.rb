@@ -10,6 +10,7 @@ require 'threema/receive/text'
 require 'threema/receive/image'
 require 'threema/receive/file'
 require 'threema/receive/delivery_receipt'
+require 'threema/receive/not_implemented_fallback'
 
 class Threema
   module Receive
@@ -58,7 +59,9 @@ class Threema
       end
 
       def classify(type)
-        Object.const_get(class_name(type))
+        return Object.const_get(class_name(type)) if Object.const_defined?(class_name(type))
+
+        Threema::Receive::NotImplementedFallback
       end
 
       def class_name(type)
