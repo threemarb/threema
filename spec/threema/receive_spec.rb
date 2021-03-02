@@ -5,160 +5,96 @@ require 'json'
 
 RSpec.describe Threema::Receive do
   let(:test_date) { Time.now.to_i }
+  let(:public_key) { test_public_key }
 
-  context '.e2e' do
-    it 'responds to e2e' do
-      expect(described_class).to respond_to(:e2e)
-    end
+  it 'responds to e2e' do
+    expect(described_class).to respond_to(:e2e)
+  end
 
-    it 'creates instance of Threema::Receive::Text for text messages' do
-      attributes = attributes_for(:text_message)
-
-      mock_pubkey(attributes[:threema_id], test_public_key)
-
-      instance = Threema::Send::Text.new(attributes)
-
-      payload = instance.payload
-
-      payload[:from]      = test_from
-      payload[:messageId] = test_message_id
-      payload[:date]      = test_date
-
-      mac = Threema::E2e::MAC.generate(
-        payload: payload,
+  describe '.e2e' do
+    subject { -> { described_class.e2e(payload: payload, threema: build(:threema), public_key: public_key) } }
+    let(:payload) do
+      the_payload = build(:text_message, public_key: test_public_key).payload
+      the_payload[:from]      = test_from
+      the_payload[:messageId] = test_message_id
+      the_payload[:date]      = test_date
+      the_payload[:mac] = Threema::E2e::MAC.generate(
+        payload: the_payload,
         api_secret: test_api_secret,
       )
-
-      payload[:mac] = mac
-
-      created = described_class.e2e(
-        payload: payload,
-        threema: build(:threema),
-        public_key: test_public_key
-      )
-
-      expect(created).to be_a(Threema::Receive::Text)
+      the_payload
     end
 
-    context 'required payload parameters' do
-      it 'requires box parameter in payload' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
-
+    describe 'requires the following payload parameters:' do
+      it 'box' do
         payload.delete(:box)
-
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-            public_key: test_public_key
-          )
-        end.to raise_error(ArgumentError)
+        should raise_error(ArgumentError)
       end
 
-      it 'requires nonce parameter in payload' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
-
+      it 'nonce' do
         payload.delete(:nonce)
-
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-            public_key: test_public_key
-          )
-        end.to raise_error(ArgumentError)
+        should raise_error(ArgumentError)
       end
 
-      it 'requires from parameter in payload' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
-
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-            public_key: test_public_key
-          )
-        end.to raise_error(ArgumentError)
+      it 'from' do
+        payload.delete(:from)
+        should raise_error(ArgumentError)
       end
 
-      it 'requires messageId parameter in payload' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
-
-        payload[:from] = test_from
-
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-            public_key: test_public_key
-          )
-        end.to raise_error(ArgumentError)
+      it 'messageId' do
+        payload.delete(:messageId)
+        should raise_error(ArgumentError)
       end
 
-      it 'requires messageId parameter in payload' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
+      it 'mac parameter' do
+        payload.delete(:mac)
+        should raise_error(ArgumentError)
+      end
 
-        payload[:from]      = test_from
-        payload[:messageId] = test_message_id
-
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-            public_key: test_public_key
-          )
-        end.to raise_error(ArgumentError)
+      context 'if all required parameters are given (sanity check)' do
+        it { should_not raise_error }
       end
     end
 
-    context 'errors' do
-      it 'raises RuntimeError if mac parameter validation fails' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
-
-        # required params
-        payload[:from]      = test_from
-        payload[:messageId] = test_message_id
-        payload[:date]      = test_date
-
-        payload[:mac] = 'compromised'
-
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-            public_key: test_public_key
-          )
-        end.to raise_error(RuntimeError)
+    describe 'errors' do
+      describe 'in case mac parameter validation fails' do
+        before { payload[:mac] = 'compromised' }
+        it { should raise_error(RuntimeError) }
       end
 
-      it 'raises ArgumentError if no public_key for sender could be found' do
-        instance = build(:text_message, public_key: test_public_key)
-        payload  = instance.payload
+      describe 'in case no public key for sender could be found' do
+        let(:public_key) { nil }
+        before { mock_error(404) }
+        it { should raise_error(RuntimeError) }
+      end
+    end
+
+    context 'for text messages' do
+      let(:payload) do
+        attributes = attributes_for(:text_message)
+
+        mock_pubkey(attributes[:threema_id], test_public_key)
+
+        instance = Threema::Send::Text.new(attributes)
+
+        payload = instance.payload
 
         # required params
         payload[:from]      = test_from
         payload[:messageId] = test_message_id
         payload[:date]      = test_date
 
-        payload[:mac] = Threema::E2e::MAC.generate(
+        mac = Threema::E2e::MAC.generate(
           payload: payload,
           api_secret: test_api_secret,
         )
 
-        mock_error(404)
+        payload[:mac] = mac
+        payload
+      end
 
-        expect do
-          described_class.e2e(
-            payload: payload,
-            threema: build(:threema),
-          )
-        end.to raise_error(RuntimeError)
+      it 'creates instance of Threema::Receive::Text' do
+        expect(subject.call).to be_a(Threema::Receive::Text)
       end
     end
   end
