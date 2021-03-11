@@ -35,7 +35,7 @@ class Threema
 
   def receive(args)
     args[:threema] = self
-    Threema::Receive.e2e(args)
+    Threema::Receive.e2e(**args)
   end
 
   private

@@ -5,7 +5,7 @@ FactoryBot.define do
     content { hello_world }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end

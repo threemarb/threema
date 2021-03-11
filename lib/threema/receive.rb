@@ -55,7 +55,7 @@ class Threema
       end
 
       def type_instance(type:, params:)
-        classify(type).new(params)
+        classify(type).new(**params)
       end
 
       def classify(type)

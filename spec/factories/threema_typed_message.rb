@@ -5,7 +5,7 @@ FactoryBot.define do
     typed { "\x01Hello World" }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 
@@ -14,7 +14,7 @@ FactoryBot.define do
     message { hello_world }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end

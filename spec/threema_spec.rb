@@ -28,7 +28,7 @@ RSpec.describe Threema do
         .to raise_error(ArgumentError)
     end
 
-    it 'tunnles send messages' do
+    it 'tunnels send messages' do
       %i[text image file].each do |message_type|
         attributes = attributes_for("#{message_type}_message".to_sym)
 
@@ -44,7 +44,7 @@ RSpec.describe Threema do
       expect(instance).to respond_to(:receive)
     end
 
-    it 'tunnles receive message' do
+    it 'tunnels receive message' do
       payload = {}
       expect(Threema::Receive).to receive(:e2e)
       instance.receive(payload)

@@ -5,7 +5,7 @@ FactoryBot.define do
     threema { FactoryBot.build(:threema) }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end
