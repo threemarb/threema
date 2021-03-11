@@ -11,7 +11,7 @@ RSpec.describe Threema::Receive::Text do
 
     it 'returns text content' do
       attributes = attributes_for(:text_receive)
-      instance = described_class.new(attributes)
+      instance = described_class.new(**attributes)
       expect(instance.content).to eq(attributes[:content])
     end
   end

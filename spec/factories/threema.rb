@@ -6,7 +6,7 @@ FactoryBot.define do
     api_secret   { test_api_secret }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end

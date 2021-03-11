@@ -9,7 +9,7 @@ FactoryBot.define do
     file       { hello_world.b }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end
