@@ -8,7 +8,7 @@ FactoryBot.define do
     public_key { nil }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end

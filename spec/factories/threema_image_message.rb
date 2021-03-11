@@ -9,7 +9,7 @@ FactoryBot.define do
     image      { 'imagecontent'.b }
 
     initialize_with do
-      new(attributes)
+      new(**attributes)
     end
   end
 end

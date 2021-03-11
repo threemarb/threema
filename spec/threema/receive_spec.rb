@@ -76,7 +76,7 @@ RSpec.describe Threema::Receive do
 
         mock_pubkey(attributes[:threema_id], test_public_key)
 
-        instance = Threema::Send::Text.new(attributes)
+        instance = Threema::Send::Text.new(**attributes)
 
         payload = instance.payload
 
@@ -102,7 +102,7 @@ RSpec.describe Threema::Receive do
     context 'for delivery receipts' do
       let(:initial_payload) do
         attributes = attributes_for(:text_message).merge(public_key: test_public_key)
-        Threema::Send::E2EBase.new(attributes).send(:generate_payload, :delivery_receipt, 'whatever')
+        Threema::Send::E2EBase.new(**attributes).send(:generate_payload, :delivery_receipt, 'whatever')
       end
 
       it 'creates instance of type Threema::Receive::DeliveryReceipt' do
@@ -113,7 +113,7 @@ RSpec.describe Threema::Receive do
     context 'for not yet implemented message types' do
       let(:initial_payload) do
         attributes = attributes_for(:text_message).merge(public_key: test_public_key)
-        Threema::Send::E2EBase.new(attributes).send(:generate_payload, :geo, 'whatever')
+        Threema::Send::E2EBase.new(**attributes).send(:generate_payload, :geo, 'whatever')
       end
 
       it 'creates instance of type Threema::Receive::DeliveryReceipt' do
