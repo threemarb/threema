@@ -1,10 +1,11 @@
 sudo: false
 language: ruby
 rvm:
-  - 2.4.1
-  - 2.3.1
-  - 2.2.6
+  - 2.6.6
+  - 2.7.2
 before_install:
+  - sudo apt-get update
+  - sudo apt-get install -y libsodium-dev
   - gem update --system
   - gem --version
   - gem install bundler

@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/thorsteneckel/threema'
   spec.license       = 'MIT'
 
-  spec.required_ruby_version = '>= 2.4'
+  spec.required_ruby_version = '>= 2.6.0'
 
   spec.files         = Dir['{lib}/**/*']
   spec.require_paths = ['lib']
