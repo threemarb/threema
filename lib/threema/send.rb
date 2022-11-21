@@ -4,7 +4,6 @@ require 'case_transform'
 require 'threema/exceptions'
 require 'threema/send/simple'
 require 'threema/send/text'
-require 'threema/send/image'
 require 'threema/send/file'
 
 class Threema
@@ -46,11 +45,6 @@ class Threema
 
     def text(params)
       message = Threema::Send::Text.new(params.merge(threema: @threema))
-      e2e(message)
-    end
-
-    def image(params)
-      message = Threema::Send::Image.new(params.merge(threema: @threema))
       e2e(message)
     end
 

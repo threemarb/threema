@@ -4,7 +4,6 @@ class Threema
   class TypedMessage
     TYPE_BYTE = {
       text: "\x01".b,
-      image: "\x02".b,
       geo: "\x10".b, # NOT IMPLEMENTED YET
       video: "\x13".b, # NOT IMPLEMENTED YET
       audio: "\x14".b, # NOT IMPLEMENTED YET

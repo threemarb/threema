@@ -7,7 +7,6 @@ require 'threema/lookup'
 require 'threema/util'
 
 require 'threema/receive/text'
-require 'threema/receive/image'
 require 'threema/receive/file'
 require 'threema/receive/delivery_receipt'
 require 'threema/receive/not_implemented_fallback'

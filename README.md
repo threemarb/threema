@@ -161,26 +161,6 @@ threema.send(
 )
 ```
 
-##### Image
-
-Send (e2e encrypted) image messages via:
-
-```ruby
-
-# via path to file
-threema.send(
-  type: :image,
-  to:   receiver_threema_id,
-  image: '/path/to/image.png',
-)
-
-# with bytestring
-threema.send(
-  type: :image,
-  to:   receiver_threema_id,
-  image: 'imagecontent'.b,
-)
-```
 
 ##### File
 
@@ -202,6 +182,9 @@ threema.send(
   file: 'filecontent'.b,
 )
 
+# For images, audio, or video send a thumbnail if you want Threema to render
+# the file as media.
+ 
 # with thumbnail path
 threema.send(
   type:      :file,
@@ -232,7 +215,6 @@ message = threema.receive(
 `message` will then be an instance of one of the following classes:
 
 - Threema::Receive::Text
-- Threema::Receive::Image
 - Threema::Receive::File
 
 You can access the message content via `message.content` which will contain either a text or bytestring, depending on the message type. File messages also have a `message.mime_type`.
