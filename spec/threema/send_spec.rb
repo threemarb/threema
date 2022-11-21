@@ -74,17 +74,6 @@ RSpec.describe Threema::Send do
       expect(instance.file(attributes)).to eq(test_message_id)
     end
 
-    it 'sends image message' do
-      attributes = attributes_for(:image_message)
-      mock_pubkey_call(attributes[:threema_id])
-      mock_capabilities(attributes[:threema_id], 'image')
-      mock_upload
-
-      mock_e2e(attributes[:threema_id])
-
-      expect(instance.image(attributes)).to eq(test_message_id)
-    end
-
     context 'error' do
       it 'raises ArgumentError if recipient identity is invalid or is not set up for end-to-end mode' do
         attributes = attributes_for(:text_message)

@@ -29,7 +29,7 @@ RSpec.describe Threema do
     end
 
     it 'tunnels send messages' do
-      %i[text image file].each do |message_type|
+      %i[text file].each do |message_type|
         attributes = attributes_for("#{message_type}_message".to_sym)
 
         expect_any_instance_of(Threema::Send).to receive(message_type).with(attributes)
