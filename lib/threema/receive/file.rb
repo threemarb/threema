@@ -9,7 +9,7 @@ require 'threema/e2e/secret_key'
 class Threema
   module Receive
     class File
-      attr_reader :content, :mime_type, :name
+      attr_reader :content, :mime_type, :name, :caption
 
       def initialize(content:, threema:, **)
         structure = JSON.parse(content)
@@ -26,6 +26,7 @@ class Threema
 
         @mime_type = structure['m']
         @name      = structure['n']
+        @caption = structure['d']
       end
     end
   end
