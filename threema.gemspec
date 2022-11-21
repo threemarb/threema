@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'case_transform'
   spec.add_runtime_dependency 'dotenv'
+  spec.add_runtime_dependency 'mimemagic'
   spec.add_runtime_dependency 'mime-types'
   spec.add_runtime_dependency 'multipart-post'
   spec.add_runtime_dependency 'rbnacl'
