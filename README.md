@@ -48,7 +48,7 @@ p Threema::E2e::Key.encode(pair[:private])
 
 **ATTENTION:** These are your identification. If you lose or publish your private key you lose your identitiy and have major problem. So keep your private key secure under all circumstances! Don't push it to a git repository or any other public place.
 
-It is important to use the corrosponding private key for the public key you have used to register your custom Threema ID.
+It is important to use the corresponding private key for the public key you have used to register your custom Threema ID.
 
 To receive Threema Gateway messages you need a valid HTTPS callback endpoint which Threema will call on incomming messages. Taken from the [documentation](https://gateway.threema.ch/de/developer/api):
 
