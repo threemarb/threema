@@ -10,21 +10,26 @@ class Threema
     class File < Threema::Send::E2EUpload
       def initialize(params)
         super
-        generate_payload(:file, JSON.generate(structure(params)))
+
+        @params = params
+        generate_payload(:file, JSON.generate(structure))
       end
+
+      attr_reader :params
 
       private
 
-      def structure(params)
-        content = from(params)
+      def structure
+        content = from
+        content['d'] = params[:caption] if params[:caption]
+        content['j'] = render_type
         return content if !params[:thumbnail]
 
-        content['t'] = thumbnail_blob_id(params)
-        content['j'] = 1
+        content['t'] = thumbnail_blob_id
         content
       end
 
-      def from(params)
+      def from
         byte_string = byte_string(:file, params[:file])
 
         encrypted = Threema::E2e::SecretKey.encrypt(
@@ -38,12 +43,11 @@ class Threema
           'k' => Threema::Util.hexify(secret_key),
           'm' => params[:mime_type] || @mime_type.to_s || 'application/octet-stream',
           'n' => params[:file_name] || @file_name || 'unknown',
-          's' => byte_string.size,
-          'd' => params[:caption] || ''
+          's' => byte_string.size
         }
       end
 
-      def thumbnail_blob_id(params)
+      def thumbnail_blob_id
         byte_string = byte_string(:thumbnail, params[:thumbnail])
 
         encrypted = Threema::E2e::SecretKey.encrypt(
@@ -64,6 +68,19 @@ class Threema
         return if @file_name.blank?
 
         @mime_type = MimeMagic.by_magic(::File.open(file))&.type
+      end
+
+      def render_type
+        case params[:render_type]
+        when :file
+          0
+        when :media
+          1
+        when :sticker
+          2
+        else
+          0
+        end
       end
     end
   end
