@@ -26,7 +26,7 @@ class Threema
 
         @mime_type = structure['m']
         @name      = structure['n']
-        @caption = structure['d']
+        @caption   = structure['d']
       end
     end
   end
