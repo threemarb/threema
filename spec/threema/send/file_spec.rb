@@ -111,6 +111,38 @@ RSpec.describe Threema::Send::File do
             box: a_string_matching(/.+/),
           )
         end
+
+        it 'takes a caption' do
+          mock_all
+
+          attributes = attributes_for(:file_message)
+          attributes[:caption] = 'this is a caption for the file I am sending.'
+          instance = described_class.new(attributes)
+
+          payload = instance.payload
+
+          expect(payload).to include(
+            to: a_string_matching(/.+/),
+            nonce: a_string_matching(/.+/),
+            box: a_string_matching(/.+/),
+          )
+        end
+
+        it 'takes a render type' do
+          mock_all
+
+          attributes = attributes_for(:file_message)
+          attributes[:render_type] = :media
+          instance = described_class.new(attributes)
+
+          payload = instance.payload
+
+          expect(payload).to include(
+            to: a_string_matching(/.+/),
+            nonce: a_string_matching(/.+/),
+            box: a_string_matching(/.+/),
+          )
+        end
       end
 
       context 'required payload keys' do
