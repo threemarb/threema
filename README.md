@@ -130,7 +130,7 @@ Send simple (unencrypted!) messages via:
 # Threema ID
 threema.send(
   type: :simple,
-  to:   receiver_threema_id,
+  threema_id:   receiver_threema_id,
   text: hello_world,
 )
 
@@ -156,7 +156,7 @@ Send (e2e encrypted) text messages via:
 ```ruby
 threema.send(
   type: :text,
-  to:   receiver_threema_id,
+  threema_id:   receiver_threema_id,
   text: hello_world,
 )
 ```
@@ -170,14 +170,14 @@ Send (e2e encrypted) image messages via:
 # via path to file
 threema.send(
   type: :image,
-  to:   receiver_threema_id,
+  threema_id:   receiver_threema_id,
   image: '/path/to/image.png',
 )
 
 # with bytestring
 threema.send(
   type: :image,
-  to:   receiver_threema_id,
+  threema_id:   receiver_threema_id,
   image: 'imagecontent'.b,
 )
 ```
@@ -191,21 +191,21 @@ Send (e2e encrypted) file messages via:
 # via path to file
 threema.send(
   type: :file,
-  to:   receiver_threema_id,
+  threema_id:   receiver_threema_id,
   file: '/path/to/file.txt',
 )
 
 # with bytestring
 threema.send(
   type: :file,
-  to:   receiver_threema_id,
+  threema_id:   receiver_threema_id,
   file: 'filecontent'.b,
 )
 
 # with thumbnail path
 threema.send(
   type:      :file,
-  to:        receiver_threema_id,
+  threema_id:        receiver_threema_id,
   file:      '/path/to/file.txt',
   thumbnail: '/path/to/thumbnail.png',
 )
@@ -213,7 +213,7 @@ threema.send(
 # with thumbnail bytestring
 threema.send(
   type:      :file,
-  to:        receiver_threema_id,
+  threema_id:        receiver_threema_id,
   file:      '/path/to/file.txt',
   thumbnail: 'thumbnailcontent'.b,
 )
