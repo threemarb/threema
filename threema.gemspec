@@ -4,6 +4,7 @@ lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'threema/version'
 
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |spec|
   spec.name          = 'threema'
   spec.version       = Threema::VERSION
@@ -22,6 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'case_transform'
   spec.add_runtime_dependency 'dotenv'
+  spec.add_runtime_dependency 'mimemagic'
   spec.add_runtime_dependency 'mime-types'
   spec.add_runtime_dependency 'multipart-post'
   spec.add_runtime_dependency 'rbnacl'
@@ -38,3 +40,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov'
   spec.add_development_dependency 'webmock'
 end
+# rubocop:enable Metrics/BlockLength
