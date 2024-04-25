@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 require 'threema/util'
-require 'active_support/core_ext/integer/time'
-require 'active_support/isolated_execution_state'
 
 class Threema
   module Receive
