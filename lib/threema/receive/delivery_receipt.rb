@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require 'threema/util'
+require 'active_support/core_ext/integer/time'
+require 'active_support/isolated_execution_state'
 
 class Threema
   module Receive
@@ -17,11 +19,10 @@ class Threema
 
       def initialize(content:, **)
         @content = content
-
         return unless type_by(content).present?
 
         @message_ids = extract_message_ids(content)
-        instance_variable_set("@#{type_by(content)}_at", Time.current)
+        instance_variable_set("@#{type_by(content)}_at", Time.now.utc.iso8601)
         self.class.send(:attr_reader, "#{type_by(content)}_at")
       end
 
@@ -38,8 +39,8 @@ class Threema
         message_ids = []
         num_message_ids.times do |index|
           start_index = index.zero? ? index : (index * UNHEXIFIED_MESSAGE_ID_LENGTH)
-          end_index = (index + 1) * UNHEXIFIED_MESSAGE_ID_LENGTH
-          message_ids << Threema::Util.hexify(type_removed.slice(start_index, end_index))
+          end_index = (index + 1) * UNHEXIFIED_MESSAGE_ID_LENGTH - 1
+          message_ids << Threema::Util.hexify(type_removed[start_index..end_index])
         end
         message_ids
       end
