@@ -13,15 +13,15 @@ class Threema
       }.freeze
       UNHEXIFIED_MESSAGE_ID_LENGTH = 8
 
-      attr_reader :content, :message_ids
+      attr_reader :content, :status, :timestamp, :message_ids
 
       def initialize(content:, **)
         @content = content
         return unless type_by(content).present?
 
+        @status = type_by(content)
+        @timestamp = Time.now.utc.to_i
         @message_ids = extract_message_ids(content)
-        instance_variable_set("@#{type_by(content)}_at", Time.now.utc.iso8601)
-        self.class.send(:attr_reader, "#{type_by(content)}_at")
       end
 
       private

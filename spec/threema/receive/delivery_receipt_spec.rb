@@ -30,33 +30,40 @@ RSpec.describe Threema::Receive::DeliveryReceipt do
     end
   end
 
+  context 'timestamp' do
+    it 'returns a timestamp' do
+      expect(subject.timestamp).to be_an_instance_of(Integer)
+      expect(Time.at(subject.timestamp, in: 'UTC')).to be_an_instance_of(Time)
+    end
+  end
+
   context 'received type' do
-    it 'returns received_at' do
-      expect(Time.iso8601(subject.received_at)).to be_a_kind_of(Time)
+    it 'returns status received' do
+      expect(subject.status).to eq(:received)
     end
   end
 
   context 'read type' do
     let(:attributes) { { content: "\x02\xE0\xC8\x12n8]\xF3\x19".b } }
 
-    it 'returns read_at' do
-      expect(Time.iso8601(subject.read_at)).to be_a_kind_of(Time)
+    it 'returns status read' do
+      expect(subject.status).to eq(:read)
     end
   end
 
   context 'explicitly_acknowledged type' do
     let(:attributes) { { content: "\x03\xE0\xC8\x12n8]\xF3\x19".b } }
 
-    it 'returns explicitly_acknowledged_at' do
-      expect(Time.iso8601(subject.explicitly_acknowledged_at)).to be_a_kind_of(Time)
+    it 'returns status explicitly_acknowledged' do
+      expect(subject.status).to eq(:explicitly_acknowledged)
     end
   end
 
   context 'explicity_declined type' do
     let(:attributes) { { content: "\x04\xE0\xC8\x12n8]\xF3\x19".b } }
 
-    it 'returns explicity_declined_at' do
-      expect(Time.iso8601(subject.explicity_declined_at)).to be_a_kind_of(Time)
+    it 'returns status explicity_declined' do
+      expect(subject.status).to eq(:explicity_declined)
     end
   end
 end
