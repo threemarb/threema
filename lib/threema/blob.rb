@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'case_transform'
 require 'threema/exceptions'
 
 class Threema

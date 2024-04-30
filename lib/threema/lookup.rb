@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'case_transform'
-
 class Threema
   class Lookup
     URL_PATH = {
@@ -67,7 +65,7 @@ class Threema
     def keys_camel_lower(params)
       cameled = {}
       params.each do |key, value|
-        cameled[CaseTransform.camel_lower(key.to_s)] = value
+        cameled[key.to_s.camelize(:lower)] = value
       end
       cameled
     end
@@ -76,7 +74,7 @@ class Threema
       list.collect do |response_entry|
         result_entry = {}
         response_entry.each do |key, value|
-          result_entry[CaseTransform.underscore(key).to_sym] = value
+          result_entry[key.underscore.to_sym] = value
         end
 
         result_entry
