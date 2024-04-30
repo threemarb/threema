@@ -5,7 +5,7 @@ require 'threema/util'
 class Threema
   module Receive
     class DeliveryReceipt
-      STATUS_TYPE_BYTE = {
+      STATUS_BYTE_MAPPING = {
         received: "\x01".b,
         read: "\x02".b,
         explicitly_acknowledged: "\x03".b,
@@ -17,30 +17,23 @@ class Threema
 
       def initialize(content:, **)
         @content = content
-        return unless type_by(content).present?
-
         @status = type_by(content)
+        return unless @status
+
         @timestamp = Time.now.utc.to_i
-        @message_ids = extract_message_ids(content)
+        @message_ids = extract_message_ids(content.slice(1, content.length - 1))
       end
 
       private
 
       def type_by(content)
-        STATUS_TYPE_BYTE.key(content.slice(0))
+        STATUS_BYTE_MAPPING.key(content.slice(0))
       end
 
-      def extract_message_ids(content)
-        type_removed = content.slice(1, content.length - 1)
-        num_message_ids = content.length / UNHEXIFIED_MESSAGE_ID_LENGTH
-
-        message_ids = []
-        num_message_ids.times do |index|
-          start_index = index.zero? ? index : (index * UNHEXIFIED_MESSAGE_ID_LENGTH)
-          end_index = (index + 1) * UNHEXIFIED_MESSAGE_ID_LENGTH - 1
-          message_ids << Threema::Util.hexify(type_removed[start_index..end_index])
+      def extract_message_ids(message_ids_payload)
+        message_ids_payload.scan(/.{,#{UNHEXIFIED_MESSAGE_ID_LENGTH}}/).reject(&:empty?).map do |message_id|
+          Threema::Util.hexify(message_id)
         end
-        message_ids
       end
     end
   end
