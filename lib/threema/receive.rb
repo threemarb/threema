@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'case_transform'
 require 'threema/e2e/mac'
 require 'threema/typed_message'
 require 'threema/lookup'
@@ -65,7 +64,7 @@ class Threema
       end
 
       def class_name(type)
-        class_name = CaseTransform.camel(type.to_s)
+        class_name = type.to_s.camelize
         "Threema::Receive::#{class_name}"
       end
 

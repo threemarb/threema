@@ -21,7 +21,6 @@ Gem::Specification.new do |spec|
   spec.files         = Dir['{lib}/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'case_transform'
   spec.add_runtime_dependency 'dotenv'
   spec.add_runtime_dependency 'mimemagic'
   spec.add_runtime_dependency 'mime-types'
