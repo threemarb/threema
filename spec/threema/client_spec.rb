@@ -11,8 +11,8 @@ RSpec.describe Threema::Client do
     expect(described_class).to respond_to(:url)
   end
 
-  let(:instance) { build(:threema_client, threema: threema) }
-  let(:threema) { build(:threema) }
+  let(:instance) { build(:threema_client) }
+  let!(:threema) { build(:threema) }
 
   context '#not_found_ok' do
     it 'responds to not_found_ok' do
@@ -53,8 +53,8 @@ RSpec.describe Threema::Client do
 
       before(:each) do
         instance.configure do |config|
-          # Threema API fingerprint as of 2021-02-27
-          fingerprint = '42b1038e72f00c8c4dad78a3ebdc6d7a50c5ef288da9019b9171e4d675c08a17'
+          # Threema API fingerprint as of 2024-04-30
+          fingerprint = '317bc8626c34a2ccd9052164828f4eb71a6bc6290e2569acee5b3a2cbde13d2a'
 
           # See: http://stackoverflow.com/a/22108461
           config.use_ssl = true
@@ -74,8 +74,8 @@ RSpec.describe Threema::Client do
         end
       end
 
-      # this is needed due to internet access restrictions
-      # in the (travis) CI environment
+      # skipped in CI because this test requires actual
+      # private key, identity, etc set in .env variables
       if !ENV['CI']
         context 'given Threema Message API URL with matching certificate' do
           let(:url) { described_class::API_URL }
@@ -87,7 +87,7 @@ RSpec.describe Threema::Client do
       end
 
       context 'given another URL without matching certificate' do
-        let(:url) { 'https://github.com/thorsteneckel/threema' }
+        let(:url) { 'https://github.com/threemarb/threema' }
         it { should raise_error(OpenSSL::SSL::SSLError) }
 
         context 'but if static certificate pinning is disabled' do

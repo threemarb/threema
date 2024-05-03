@@ -16,12 +16,12 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/thorsteneckel/threema'
   spec.license       = 'MIT'
 
-  spec.required_ruby_version = '>= 2.6.0'
+  spec.required_ruby_version = '>= 2.7.0'
 
   spec.files         = Dir['{lib}/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'case_transform'
+  spec.add_runtime_dependency 'activesupport', '~> 7.0.8'
   spec.add_runtime_dependency 'dotenv'
   spec.add_runtime_dependency 'mimemagic'
   spec.add_runtime_dependency 'mime-types'
@@ -29,8 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rbnacl'
 
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'codeclimate-test-reporter', '~> 0.6'
-  spec.add_development_dependency 'codecov'
   spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'fakefs'
   spec.add_development_dependency 'pry'
