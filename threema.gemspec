@@ -29,8 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rbnacl'
 
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'codeclimate-test-reporter', '~> 0.6'
-  spec.add_development_dependency 'codecov'
   spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'fakefs'
   spec.add_development_dependency 'pry'

@@ -1,11 +1,5 @@
 # threema
 
-[![Build Status](https://travis-ci.org/thorsteneckel/threema.svg?branch=master)](https://travis-ci.org/thorsteneckel/threema)
-[![codecov](https://codecov.io/gh/thorsteneckel/threema/branch/master/graph/badge.svg)](https://codecov.io/gh/thorsteneckel/threema)
-[![Code Climate](https://codeclimate.com/github/thorsteneckel/threema/badges/gpa.svg)](https://codeclimate.com/github/thorsteneckel/threema)
-[![Gem](https://img.shields.io/gem/v/threema.svg?maxAge=2592000)]()
-
-
 This gem provides access to the Threema Gateway API.
 
 ## Installation

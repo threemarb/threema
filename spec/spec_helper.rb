@@ -10,19 +10,13 @@ require 'fakefs/spec_helpers'
 require 'pry'
 
 require 'simplecov'
-require 'codecov'
-require 'codeclimate-test-reporter'
 
 SimpleCov.start do
   # Don't get coverage on the test cases themselves.
   add_filter '/spec/'
   add_filter '/test/'
-  # Codecov doesn't automatically ignore vendored files.
-  add_filter '/vendor/'
 end
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
-
-CodeClimate::TestReporter.start
+SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 
 require 'threema'
 
