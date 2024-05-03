@@ -43,13 +43,13 @@ RSpec.describe Threema::Client do
     context 'with static certificate pinning' do
       let(:public_key_pinning) { true }
 
-      # before(:all) do
-      #   WebMock.allow_net_connect!
-      # end
+      before(:all) do
+        WebMock.allow_net_connect!
+      end
 
-      # after(:all) do
-      #   WebMock.disable_net_connect!
-      # end
+      after(:all) do
+        WebMock.disable_net_connect!
+      end
 
       before(:each) do
         instance.configure do |config|
@@ -74,11 +74,15 @@ RSpec.describe Threema::Client do
         end
       end
 
-      context 'given Threema Message API URL with matching certificate' do
-        let(:url) { described_class::API_URL }
-        it 'checks HTTP Public Key Pinning' do
-          should raise_error(RequestError)
-          # not OpenSSL::SSL::SSLError
+      # skipped in CI because this test requires actual
+      # private key, identity, etc set in .env variables
+      if !ENV['CI']
+        context 'given Threema Message API URL with matching certificate' do
+          let(:url) { described_class::API_URL }
+          it 'checks HTTP Public Key Pinning' do
+            should raise_error(RequestError)
+            # not OpenSSL::SSL::SSLError
+          end
         end
       end
 
