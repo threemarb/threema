@@ -9,7 +9,7 @@ def hello_world
 end
 
 def test_public_key
-  '2edf856e8a0f8f8e761be57f895f8827f42c6be0c6c891b95494faa7d264f7d9'
+  'd981f35570026a9551fbb27709087fe9c268b8f1395998b4ae5019476cd58fae'
 end
 
 def test_private_key

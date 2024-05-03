@@ -35,6 +35,7 @@ class Threema
     def get(url, params = {})
       response = handle_error do
         uri = authed_uri(url, params)
+        # binding.pry
         req = Net::HTTP::Get.new(uri)
 
         request_https(uri, req)

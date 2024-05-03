@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :threema_client, class: Threema::Client do
-    threema { FactoryBot.build(:threema) }
+    threema
 
     initialize_with do
       new(**attributes)

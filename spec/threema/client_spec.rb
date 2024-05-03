@@ -11,8 +11,8 @@ RSpec.describe Threema::Client do
     expect(described_class).to respond_to(:url)
   end
 
-  let(:instance) { build(:threema_client, threema: threema) }
-  let(:threema) { build(:threema) }
+  let(:instance) { build(:threema_client) }
+  let!(:threema) { build(:threema) }
 
   context '#not_found_ok' do
     it 'responds to not_found_ok' do
@@ -43,13 +43,13 @@ RSpec.describe Threema::Client do
     context 'with static certificate pinning' do
       let(:public_key_pinning) { true }
 
-      before(:all) do
-        WebMock.allow_net_connect!
-      end
+      # before(:all) do
+      #   WebMock.allow_net_connect!
+      # end
 
-      after(:all) do
-        WebMock.disable_net_connect!
-      end
+      # after(:all) do
+      #   WebMock.disable_net_connect!
+      # end
 
       before(:each) do
         instance.configure do |config|
@@ -74,15 +74,11 @@ RSpec.describe Threema::Client do
         end
       end
 
-      # this is needed due to internet access restrictions
-      # in the (travis) CI environment
-      if !ENV['CI']
-        context 'given Threema Message API URL with matching certificate' do
-          let(:url) { described_class::API_URL }
-          it 'checks HTTP Public Key Pinning' do
-            should raise_error(RequestError)
-            # not OpenSSL::SSL::SSLError
-          end
+      context 'given Threema Message API URL with matching certificate' do
+        let(:url) { described_class::API_URL }
+        it 'checks HTTP Public Key Pinning' do
+          should raise_error(RequestError)
+          # not OpenSSL::SSL::SSLError
         end
       end
 
