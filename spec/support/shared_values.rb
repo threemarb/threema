@@ -9,11 +9,11 @@ def hello_world
 end
 
 def test_public_key
-  ENV['THREEMARB_PUBLIC']
+  'd981f35570026a9551fbb27709087fe9c268b8f1395998b4ae5019476cd58fae'
 end
 
 def test_private_key
-  ENV['THREEMARB_PRIVATE']
+  '2edf856e8a0f8f8e761be57f895f8827f42c6be0c6c891b95494faa7d264f7d9'
 end
 
 def test_auth_params
@@ -24,11 +24,11 @@ def test_auth_params
 end
 
 def test_from
-  ENV['THREEMARB_API_IDENTITY']
+  '*VALID1'
 end
 
 def test_api_secret
-  ENV['THREEMARB_API_SECRET']
+  'CWWuNaFDkEZLiRSt'
 end
 
 def test_blob_id
