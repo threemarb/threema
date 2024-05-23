@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.files         = Dir['{lib}/**/*']
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'activesupport', '<= 7.0.8'
+  spec.add_runtime_dependency 'activesupport'
   spec.add_runtime_dependency 'dotenv'
   spec.add_runtime_dependency 'mimemagic'
   spec.add_runtime_dependency 'mime-types'
